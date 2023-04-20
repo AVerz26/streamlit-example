@@ -1,38 +1,55 @@
-from collections import namedtuple
-import altair as alt
-import math
 import pandas as pd
 import streamlit as st
+import matplotlib.pyplot as plt
 
-"""
-# Welcome to Streamlit!
+def read_data(file):
+    df = pd.read_excel(file, engine='xlrd')
+    return df
 
-Edit `/streamlit_app.py` to customize this app to your heart's desire :heart:
+def plot_data(df, show_lines):
+    fig, ax1 = plt.subplots()
 
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
+    color = 'tab:red'
+    ax1.set_xlabel('Semana')
+    ax1.set_ylabel('Cxs/Solv', color=color)
+    ax1.bar(df['Semana'], df['Cxs/Solv'], color=color)
+    ax1.tick_params(axis='y', labelcolor=color)
 
-In the meantime, below is an example of what you can do with just a few lines of code:
-"""
+    ax2 = ax1.twinx()
 
+    if show_lines['CINTA']:
+        ax2.plot(df['Semana'], df['CINTA'], label='CINTA')
+    if show_lines['ESPECIAL']:
+        ax2.plot(df['Semana'], df['ESPECIAL'], label='ESPECIAL')
+    if show_lines['GRANEL']:
+        ax2.plot(df['Semana'], df['GRANEL'], label='GRANEL')
+    if show_lines['POLPA']:
+        ax2.plot(df['Semana'], df['POLPA'], label='POLPA')
+    if show_lines['PVC']:
+        ax2.plot(df['Semana'], df['PVC'], label='PVC')
+    if show_lines['EXP']:
+        ax2.plot(df['Semana'], df['EXP'], label='EXP')
 
-with st.echo(code_location='below'):
-    total_points = st.slider("Number of points in spiral", 1, 5000, 2000)
-    num_turns = st.slider("Number of turns in spiral", 1, 100, 9)
+    ax2.set_ylabel('Outras colunas', color='tab:blue')
+    ax2.tick_params(axis='y', labelcolor='tab:blue')
 
-    Point = namedtuple('Point', 'x y')
-    data = []
+    fig.legend()
+    st.pyplot(fig)
 
-    points_per_turn = total_points / num_turns
+def main():
+    st.set_page_config(page_title="Gráfico de Barras e Linhas", layout="wide")
+    st.title("Gráfico de Barras e Linhas")
 
-    for curr_point_num in range(total_points):
-        curr_turn, i = divmod(curr_point_num, points_per_turn)
-        angle = (curr_turn + 1) * 2 * math.pi * i / points_per_turn
-        radius = curr_point_num / total_points
-        x = radius * math.cos(angle)
-        y = radius * math.sin(angle)
-        data.append(Point(x, y))
+    file = st.file_uploader("Selecione o arquivo Excel", type=["xlsx", "xls"])
 
-    st.altair_chart(alt.Chart(pd.DataFrame(data), height=500, width=500)
-        .mark_circle(color='#0068c9', opacity=0.5)
-        .encode(x='x:Q', y='y:Q'))
+    if file is not None:
+        df = read_data(file)
+        st.write(df)
+
+        col_options = df.columns[1:].tolist()
+        show_lines = {col: st.checkbox(col, value=True) for col in col_options}
+
+        plot_data(df, show_lines)
+
+if __name__ == '__main__':
+    main()
