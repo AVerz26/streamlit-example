@@ -139,7 +139,7 @@ def get_data_and_classify(msg):
 
 def enviar_mensagem(texto):
     TELEGRAM_BOT_TOKEN = ''
-    CHAT_ID = '988668946'
+    CHAT_ID = ''
     url = f'https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage'
     params = {'chat_id': CHAT_ID, 'text': texto}
     requests.post(url, params=params)
