@@ -138,8 +138,8 @@ def get_data_and_classify(msg):
 
 
 def enviar_mensagem(texto):
-    TELEGRAM_BOT_TOKEN = ''
-    CHAT_ID = ''
+    TELEGRAM_BOT_TOKEN = '6756572199:AAF1PBY8MeS7ajC31mjotFSZvlHXbL9VLpE'
+    CHAT_ID = '988668946'
     url = f'https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage'
     params = {'chat_id': CHAT_ID, 'text': texto}
     requests.post(url, params=params)
@@ -172,7 +172,7 @@ def handle(msg):
 
 
 
-token = ''
+token = '6756572199:AAF1PBY8MeS7ajC31mjotFSZvlHXbL9VLpE'
 
 
 bot = telepot.Bot(token)
