@@ -179,5 +179,3 @@ bot = telepot.Bot(token)
 
 MessageLoop(bot, {'chat': handle}).run_as_thread()
 
-while True:
-    pass
