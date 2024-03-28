@@ -34,7 +34,7 @@ def get_data_and_classify(msg):
 
     
         t1 = time.time()
-        edge_driver_path = 'C:\\Users\\andre\\OneDrive - Grupo Mantiqueira\\msedgedriver.exe'
+        edge_driver_path = '\msedgedriver.exe'
     #driver = webdriver.Edge(executable_path=edge_driver_path)
         driver = webdriver.Edge()
 
@@ -138,7 +138,7 @@ def get_data_and_classify(msg):
 
 
 def enviar_mensagem(texto):
-    TELEGRAM_BOT_TOKEN = '6796154017:AAGCrvuynsYpsNdkWCgpjw8l_zNO0Lqqufg'
+    TELEGRAM_BOT_TOKEN = ''
     CHAT_ID = '988668946'
     url = f'https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage'
     params = {'chat_id': CHAT_ID, 'text': texto}
@@ -172,7 +172,7 @@ def handle(msg):
 
 
 
-token = '6796154017:AAGCrvuynsYpsNdkWCgpjw8l_zNO0Lqqufg'
+token = ''
 
 
 bot = telepot.Bot(token)
