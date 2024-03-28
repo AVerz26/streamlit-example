@@ -1,3 +1,4 @@
-altair
+telepot
 pandas
-streamlit
+selenium
+tqdm
